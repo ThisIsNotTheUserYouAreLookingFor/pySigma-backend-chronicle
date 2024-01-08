@@ -33,7 +33,7 @@ def test_chronicle_and_expression(chronicle_backend: ChronicleBackend):
         """
     )
 
-    assert chronicle_backend.convert(rule) == ['(fieldA="valueA" AND fieldB="valueB")']
+    assert chronicle_backend.convert(rule) == ['fieldA="valueA" AND fieldB="valueB"']
 
 
 def test_chronicle_or_expression(chronicle_backend: ChronicleBackend):
@@ -52,7 +52,7 @@ def test_chronicle_or_expression(chronicle_backend: ChronicleBackend):
                 condition: 1 of sel*
         """
     )
-    assert chronicle_backend.convert(rule) == ['(fieldA="valueA" OR fieldB="valueB")']
+    assert chronicle_backend.convert(rule) == ['fieldA="valueA" OR fieldB="valueB"']
 
 
 def test_chronicle_and_or_expression(chronicle_backend: ChronicleBackend):
@@ -75,7 +75,7 @@ def test_chronicle_and_or_expression(chronicle_backend: ChronicleBackend):
         """
     )
     assert chronicle_backend.convert(rule) == [
-        '((fieldA="valueA1" OR fieldA="valueA2") AND (fieldB="valueB1" OR fieldB="valueB2"))'
+        '((fieldA="valueA1" AND fieldB="valueB1") OR (fieldA="valueA1" AND fieldB="valueB2") OR (fieldA="valueA2" AND fieldB="valueB1") OR (fieldA="valueA2" AND fieldB="valueB2"))'
     ]
 
 
@@ -98,5 +98,5 @@ def test_chronicle_or_and_expression(chronicle_backend: ChronicleBackend):
         """
     )
     assert chronicle_backend.convert(rule) == [
-        '((fieldA="valueA1" AND fieldB="valueB1") OR (fieldA="valueA2" AND fieldB="valueB2"))'
+        '(fieldA="valueA1" AND fieldB="valueB1") OR (fieldA="valueA2" AND fieldB="valueB2")'
     ]
