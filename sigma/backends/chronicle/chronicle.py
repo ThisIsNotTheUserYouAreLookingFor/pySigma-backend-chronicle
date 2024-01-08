@@ -1,6 +1,6 @@
 from sigma.rule import SigmaRule
 from sigma.conversion.base import TextQueryBackend
-from sigma.types import (SigmaRegularExpressionFlag)
+from sigma.types import SigmaRegularExpressionFlag
 import sigma
 from typing import Callable, ClassVar, Dict, Optional
 
@@ -17,7 +17,6 @@ class ChronicleBackend(TextQueryBackend):
     requires_pipeline: ClassVar[
         bool
     ] = True  # Does the backend requires that a processing pipeline is provided?
-
     group_expression: ClassVar[str] = "({expr})"
     or_token: ClassVar[str] = "OR"
     and_token: ClassVar[str] = "AND"
@@ -30,12 +29,11 @@ class ChronicleBackend(TextQueryBackend):
         True: "true",
         False: "false",
     }
-    re_expression: ClassVar[str] ="{field}=/{regex}/ {flag_i}"
+    re_expression: ClassVar[str] = "{field}=/{regex}/ {flag_i}"
     re_escape_char: ClassVar[str] = "\\"
     re_flags: ClassVar[Dict[SigmaRegularExpressionFlag, str]] = {
         SigmaRegularExpressionFlag.IGNORECASE: "nocase",
     }
-    
 
     def __init__(
         self,
