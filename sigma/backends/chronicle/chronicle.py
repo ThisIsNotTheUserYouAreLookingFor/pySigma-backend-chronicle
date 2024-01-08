@@ -1,8 +1,9 @@
 from sigma.rule import SigmaRule
 from sigma.conversion.base import TextQueryBackend
 from sigma.types import SigmaRegularExpressionFlag
+from sigma.conditions import ConditionItem, ConditionAND, ConditionNOT, ConditionOR
 import sigma
-from typing import Callable, ClassVar, Dict, Optional
+from typing import Any, Callable, ClassVar, Dict, Optional, List, Tuple
 
 
 class ChronicleBackend(TextQueryBackend):
@@ -29,6 +30,11 @@ class ChronicleBackend(TextQueryBackend):
         True: "true",
         False: "false",
     }
+    precedence: ClassVar[Tuple[ConditionItem, ConditionItem, ConditionItem]] = (
+        ConditionNOT,
+        ConditionOR,
+        ConditionAND,
+    )
     re_expression: ClassVar[str] = "{field}=/{regex}/ {flag_i}"
     re_escape_char: ClassVar[str] = "\\"
     re_flags: ClassVar[Dict[SigmaRegularExpressionFlag, str]] = {
